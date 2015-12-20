@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Archers de la Bretagne Romantique</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/abr.css' %}">
+</head>
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                {% if request.path == '/' %}
+                <li class="active"><a href="{% url 'actu:index' %}">Accueil</a></li>
+                {% else %}
+                <li><a href="{% url 'actu:index' %}">Accueil</a></li>
+                {% endif %}
+
+                {% if request.path == '/presentation/' %}
+                <li class="active"><a href="{% url 'presentation:index' %}">Présentation</a></li>
+                {% else %}
+                <li><a href="{% url 'presentation:index' %}">Présentation</a></li>
+                {% endif %}
+
+                {% if request.path == '/info/' %}
+                <li class="active"><a href="{% url 'info:index' %}">Information</a></li>
+                {% else %}
+                <li><a href="{% url 'info:index' %}">Information</a></li>
+                {% endif %}
+
+                {% if request.path == '/photo/' %}
+                <li class="active"><a href="{% url 'photo:index' %}">Photos</a></li>
+                {% else %}
+                <li><a href="{% url 'photo:index' %}">Photos</a></li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <li><a class="btn btn-default" href="{% url 'monitoring:index' %}"><i class="fa fa-user"></i> {{ user.username }}</a></li>
+                <li><a class="btn btn-danger" href="{% url 'accounts:logout' %}"><i class="fa fa-fw fa-power-off"></i></a></li>
+                {% else %}
+                <li><a class="btn btn-default" href="{% url 'accounts:forms' %}">Connexion</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <h3><a class="text-muted" href="{% url 'actu:index' %}">Les Archers de la Bretagne Romantique</a></h3>
+    </header>
+
+    {% block title %}{% endblock %}
+
+    <div class="row marketing">
+        {% block body %}{% endblock %}
+    </div>
+
+    <footer class="footer">
+        <p>&copy; Les Archers de la Bretagne Romantique 2015</p>
+    </footer>
+</div>
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+{% block script %}{% endblock %}
+
+</body>
+</html>
