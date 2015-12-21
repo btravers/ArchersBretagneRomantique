@@ -1,7 +1,7 @@
 {
-  "name": "abr_server",
+  "name": "abr_website",
   "version": "0.0.0",
-  "description": "Archers de la Bretagne Romantique website (server)",
+  "description": "Archers de la Bretagne Romantique website",
   "main": "lib/app.js",
   "scripts": {
     "start": "nodemon lib/app.js --exec babel-node",
