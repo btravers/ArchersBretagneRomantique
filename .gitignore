@@ -1,9 +1,9 @@
 node_modules/
-dist/
 data/
 .idea/
+dist/
+public/js/
 
 app.crt
 app.key
-bundle.js
 npm-debug.log

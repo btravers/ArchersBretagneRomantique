@@ -4,15 +4,15 @@
   "description": "Archers de la Bretagne Romantique website",
   "main": "lib/server.js",
   "scripts": {
-    "start-front": "webpack-dev-server --content-base lib/public/ --inline --hot",
-    "start-back": "nodemon lib/server.js --exec babel-node",
-    "build": "webpack --progress --profile --colors && babel lib --out-dir dist",
-    "serve": "node dist/server.js"
+    "start-app": "webpack-dev-server --inline --hot",
+    "start-server": "nodemon src/server/server.js --exec babel-node",
+    "build": "webpack --progress --profile --colors && babel src/server --out-dir dist/server",
+    "serve": "node dist/server/server.js"
   },
   "author": "Benoit TRAVERS <benoit.travers.fr@gmail.com>",
   "license": "Proprietary",
   "dependencies": {
-    "babel-preset-react": "^6.3.13",
+    "babel": "^6.3.26",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.2",
     "compression": "^1.6.0",

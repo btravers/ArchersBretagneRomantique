@@ -3,7 +3,6 @@ import User from './models/user';
 import authRoutes from './routes/auth-routes';
 import articlesRoutes from './routes/article-routes';
 import usersRoutes from './routes/user-routes';
-import frontRoutes from './routes/front-routes';
 
 const fs = require('fs');
 const path = require('path');
@@ -25,16 +24,16 @@ const passportLocal = require('passport-local');
 const app = express();
 
 const server = https.createServer({
-  cert:fs.readFileSync(path.join(__dirname, '../app.crt')),
-  key: fs.readFileSync(path.join(__dirname, '../app.key'))
+  cert:fs.readFileSync(path.join(__dirname, '../../app.crt')),
+  key: fs.readFileSync(path.join(__dirname, '../../app.key'))
 }, app);
+
 
 // Connecting to MongoDB instance
 mongoose.connect(dbConfig.url);
 
 
 // Express configuration
-app.set('views', path.join(__dirname, 'views'));
 app.use(logger('dev'));
 app.use(cors());
 app.use(compression());
@@ -87,7 +86,7 @@ passport.deserializeUser((id, done) => {
 
 
 // Registering routes
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../../public')));
 
 const auth = express.Router();
 authRoutes(auth, passport);
@@ -98,9 +97,9 @@ articlesRoutes(api);
 usersRoutes(api);
 app.use('/api', api);
 
-const front = express.Router();
-frontRoutes(front);
-app.use('/', front);
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

@@ -1,9 +1,9 @@
 var path = require('path');
 
 module.exports = {
-  entry: './lib/app.js',
+  entry: './src/app/app.js',
   output: {
-    path: path.join(__dirname, 'lib/public/js'),
+    path: path.join(__dirname, 'public/js'),
     filename: 'bundle.js'
   },
   module: {
@@ -20,7 +20,7 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: "./lib/public",
+    contentBase: "./public/js",
     noInfo: true,
     hot: true,
     inline: true
