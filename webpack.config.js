@@ -3,15 +3,15 @@ var path = require('path');
 module.exports = {
   entry: './lib/app.js',
   output: {
-    path: path.join(__dirname, 'lib/public/js/bundle.js'),
+    path: path.join(__dirname, 'lib/public/js'),
     filename: 'bundle.js'
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ['react-hot', 'babel']
+        loader: 'babel',
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,

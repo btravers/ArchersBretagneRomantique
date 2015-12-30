@@ -5,3 +5,5 @@ data/
 
 app.crt
 app.key
+bundle.js
+npm-debug.log
