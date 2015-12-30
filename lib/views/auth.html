@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Les Archers de la Bretagne Romantique</title>
+</head>
+
+<body>
+<div class="row marketing">
+  <table class="forms">
+    <tbody>
+    <tr>
+      <td class="forms registration">
+        <h1 class="text-center">Inscription</h1>
+
+        <div class="alert alert-danger">Errors</div>
+
+        <form method="post" action="/auth/signup">
+
+          <div class="form-group">
+            <label for="email">Adresse Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email">
+          </div>
+
+          <div class="form-group">
+            <label for="lastname">Nom</label>
+            <input type="text" class="form-control" id="lastname" placeholder="Nom">
+          </div>
+
+          <div class="form-group">
+            <label for="lastname">Prénom</label>
+            <input type="text" class="form-control" id="firstname" placeholder="Prénom">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control" id="password" placeholder="Mot de passe">
+          </div>
+
+          <div class="form-group">
+            <label for="confirmpassword">Confirmation du mot de passe</label>
+            <input type="password" class="form-control" id="confirmpassword" placeholder="Confirmation du mot de passe">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Inscription</button>
+        </form>
+      </td>
+      <td class="forms login">
+        <h1 class="text-center">Connexion</h1>
+
+        <div class="alert alert-danger">Errors</div>
+
+        <form method="post" action="/auth/login">
+
+          <div class="form-group">
+            <label for="email">Adresse Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control" id="password" placeholder="Mot de passe">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+        </form>
+
+        <p class="text-center"><a href="#">Mot de passe oublié ?</a></p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <blockquote>Cet espace est réservé aux membres des Archers de la Bretagne Romantique. Si vous êtes membre du club et
+    que vous ne disposez pas d'un compte, remplissez le formulaire d'inscription. Un email vous sera ensuite envoyé une
+    fois votre inscription validée.
+  </blockquote>
+</div>
+
+<footer class="footer">
+  <p>&copy; Les Archers de la Bretagne Romantique 2015</p>
+</footer>
+</body>
+</html>
