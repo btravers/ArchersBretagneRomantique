@@ -15,14 +15,14 @@ import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import passportLocal from 'passport-local';
 import Html from './components/Html';
-import { port, dbUrl, sessionSecret } from './config';
+import { httpPort, httpsPort, dbUrl, sessionSecret } from './config';
 
-const app = global.server = express();
+const httpServer = express();
 
-const server = https.createServer({
+const httpsServer = https.createServer({
   cert: fs.readFileSync(path.join(__dirname, '../app.crt')),
   key: fs.readFileSync(path.join(__dirname, '../app.key'))
-}, app);
+}, httpServer);
 
 mongoose.connect(dbUrl, (err) => {
   console.log('Could not connect to mongo:\n', err);
@@ -31,15 +31,15 @@ mongoose.connect(dbUrl, (err) => {
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(logger('dev'));
-app.use(cors());
-app.use(compression());
-app.use(bodyParser.urlencoded({
+httpServer.use(express.static(path.join(__dirname, 'public')));
+httpServer.use(logger('dev'));
+httpServer.use(cors());
+httpServer.use(compression());
+httpServer.use(bodyParser.urlencoded({
   extended: false
 }));
-app.use(cookieParser());
-app.use(expressSession({
+httpServer.use(cookieParser());
+httpServer.use(expressSession({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
@@ -48,8 +48,8 @@ app.use(expressSession({
   }
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+httpServer.use(passport.initialize());
+httpServer.use(passport.session());
 
 //
 // Configure Passport
@@ -90,16 +90,30 @@ passport.deserializeUser((id, done) => {
 });
 
 //
+// Redirect to https
+// -----------------------------------------------------------------------------
+httpServer.all('*', (req, res, next) =>{
+  if(req.secure){
+    return next();
+  }
+  let host = req.host;
+  if (httpsPort !== 443) {
+    host += `:${httpsPort}`;
+  }
+  res.redirect(`https://${host}${req.url}`);
+});
+
+//
 // Register API middleware
 // -----------------------------------------------------------------------------
-app.use('/api/content', require('./api/content'));
-app.use('/api/articles', require('./api/article'));
-app.use('/api/auth', require('./api/auth')(passport));
+httpServer.use('/api/content', require('./api/content'));
+httpServer.use('/api/articles', require('./api/article'));
+httpServer.use('/api/auth', require('./api/auth')(passport));
 
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-server.get('*', async (req, res, next) => {
+httpServer.get('*', async (req, res, next) => {
   try {
     let statusCode = 200;
     const data = { title: '', description: '', css: '', body: '', entry: assets.main.js };
@@ -123,9 +137,14 @@ server.get('*', async (req, res, next) => {
   }
 });
 
+
+
 //
 // Launch the server
 // -----------------------------------------------------------------------------
-server.listen(port, () => {
-  console.log(`The server is running at http://localhost:${port}/`);
+httpServer.listen(httpPort, () => {
+  console.log(`The server is running at http://127.0.0.1:${httpPort}/`);
+});
+httpsServer.listen(httpsPort, () => {
+  console.log(`The server is running at https://127.0.0.1:${httpsPort}/`);
 });
