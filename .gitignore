@@ -1,9 +1,12 @@
-node_modules/
-data/
-.idea/
-dist/
-public/js/
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 
+build/
+node_modules/
+.idea/
+
+ncp-debug.log
+npm-debug.log
 app.crt
 app.key
-npm-debug.log
+
